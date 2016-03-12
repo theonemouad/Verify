@@ -1,9 +1,12 @@
 <?php
-require_once __DIR__ . '/../credentials.php';
 
-if(isset($_POST['number'])){
+define('NEXMO_KEY',    'cf6db710');
+define('NEXMO_SECRET', '163dbc0117173df7');
+define('NEXMO_FROM',   'VEO');
+
+if(isset($_POST['phone'])){
     session_start();
-    $number = $_POST['number'];
+    $phone = $_POST['phone'];
     $code = rand(1000, 9999); // random 4 digit code
     $_SESSION['code'] = $code; // store code for later
 
@@ -11,7 +14,7 @@ if(isset($_POST['number'])){
             'api_key' => NEXMO_KEY,
             'api_secret' => NEXMO_SECRET,
             'from' => NEXMO_FROM,
-            'to' => $number,
+            'to' => $phone,
             'text' => 'Your verification code is: ' . $code
         ));
 
@@ -71,7 +74,7 @@ if(isset($_POST['number'])){
 
     <form class="form-verify" role="form" method="POST" action="index.php">
         <h2 class="form-verify-heading">Verify Your Phone</h2>
-        <input name="number" type="tel" class="form-control" placeholder="Phone number" required autofocus>
+        <input name="phone" type="tel" class="form-control" placeholder="Phone number" required autofocus>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Verify</button>
     </form>
 
